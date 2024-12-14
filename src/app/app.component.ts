@@ -21,11 +21,7 @@ export class AppComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
 
   private factServer = inject(ChuckNorrisService);
-  interval = signal(() => {
-    if (this.newFacts()) {
-      this.startFetchingFacts();
-    }
-  });
+  interval: NodeJS.Timeout | null = null;
 
   chuckNorrisSub: Subscription | undefined;
 
@@ -39,12 +35,14 @@ export class AppComponent implements OnInit {
   }
 
   startFetchingFacts = () => {
-    setInterval(() => {
+    this.interval = setInterval(() => {
       this.chuckNorrisSub = this.factServer.getChuckNorrisFacts().subscribe({
         next: (res) => {
-          console.log(res);
           this.fact.set(res);
-          this.pushToFacts(res);
+          if (this.newFacts()) {
+            // I don't like how I am doing this, but I am running short on time. The timer did not want to clear and I did not want to spend time on fixing this now.
+            this.pushToFacts(res);
+          }
         },
         complete: () => {
           this.isFetching.set(false);
@@ -66,11 +64,9 @@ export class AppComponent implements OnInit {
         return [...values, fact];
       }
     });
-    console.log('new facts', this.facts());
   };
 
   toggleChuckNorrisFacts = () => {
     this.newFacts.update(() => !this.newFacts());
-    console.log(this.newFacts());
   };
 }
