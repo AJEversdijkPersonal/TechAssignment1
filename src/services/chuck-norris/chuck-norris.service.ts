@@ -20,7 +20,7 @@ export class ChuckNorrisService implements OnInit {
       map((res) => res),
       catchError((error) => {
         console.log(error);
-        return throwError(() => new Error('something went wrong in the api'));
+        return throwError(() => new Error('Could not fetch the api'));
       })
     );
   };
