@@ -1,6 +1,16 @@
 <main class="main">
   <div>
-    <button (click)="printFacts()"></button>
+    <button (click)="toggleChuckNorrisFacts()">show facts</button>
+    <h2>current fact:</h2>
+    <p>
+      {{ fact()?.value }}
+    </p>
+    <h2>fact list:</h2>
+    @for (fact of facts(); track $index) {
+    <p>
+      {{ fact.value }}
+    </p>
+    }
   </div>
 </main>
 <router-outlet />

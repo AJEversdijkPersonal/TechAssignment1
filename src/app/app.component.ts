@@ -1,6 +1,8 @@
 import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ChuckNorrisService } from '../services/chuck-norris/chuck-norris.service';
+import { Fact } from './components/model/model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -11,36 +13,64 @@ import { ChuckNorrisService } from '../services/chuck-norris/chuck-norris.servic
 })
 export class AppComponent implements OnInit {
   title = 'techAssesment1';
-  isFetching = signal(false);
+  isFetching = signal<boolean>(false);
   error = signal<string>('');
-  fact = signal<string>('');
-  facts = signal<string[]>([]);
-
+  fact = signal<Fact | null>(null);
+  facts = signal<Fact[]>([]);
+  newFacts = signal<boolean>(false);
   private destroyRef = inject(DestroyRef);
 
   private factServer = inject(ChuckNorrisService);
+  interval = signal(() => {
+    if (this.newFacts()) {
+      this.startFetchingFacts();
+    }
+  });
+
+  chuckNorrisSub: Subscription | undefined;
 
   ngOnInit(): void {
     this.isFetching.set(true);
-    const chuckNorrisSub = this.factServer.getChuckNorrisFacts().subscribe({
-      next: (res) => {
-        console.log(res);
-        // this.fact.set(re);
-      },
-      complete: () => {
-        this.isFetching.set(false);
-      },
-      error: (error) => {
-        console.log(error);
-        this.error.set(error.message);
-      },
-    });
+    this.startFetchingFacts();
 
     this.destroyRef.onDestroy(() => {
-      chuckNorrisSub.unsubscribe();
+      this.chuckNorrisSub?.unsubscribe();
     });
   }
-  printFacts = () => {
-    console.log(this.factServer.chuckNorrisFacts());
+
+  startFetchingFacts = () => {
+    setInterval(() => {
+      this.chuckNorrisSub = this.factServer.getChuckNorrisFacts().subscribe({
+        next: (res) => {
+          console.log(res);
+          this.fact.set(res);
+          this.pushToFacts(res);
+        },
+        complete: () => {
+          this.isFetching.set(false);
+        },
+        error: (error) => {
+          console.log(error);
+          this.error.set(error.message);
+        },
+      });
+    }, 5000);
+  };
+
+  pushToFacts = (fact: Fact) => {
+    this.facts.update((values) => {
+      if (this.facts().length < 10) {
+        return [...values, fact];
+      } else {
+        this.facts().shift();
+        return [...values, fact];
+      }
+    });
+    console.log('new facts', this.facts());
+  };
+
+  toggleChuckNorrisFacts = () => {
+    this.newFacts.update(() => !this.newFacts());
+    console.log(this.newFacts());
   };
 }
