@@ -3,7 +3,7 @@
   "compilerOptions": {
     "outDir": "./out-tsc/spec",
     "module": "ESNext",
-    "types": ["jest"]
+    "types": ["jest", "node"]
   },
   "include": ["src/**/*.spec.ts", "src/**/*.d.ts"]
 }
