@@ -17,7 +17,6 @@ export class FavoritesService {
     const favoritesString = this.#favoritesString();
     if (favoritesString) {
       this.#favorites.set(JSON.parse(favoritesString));
-      console.log(this.favorites());
     }
   };
 
