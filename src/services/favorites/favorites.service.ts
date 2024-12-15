@@ -26,4 +26,12 @@ export class FavoritesService {
     localStorage.setItem('favoriteFacts', JSON.stringify(this.favorites()));
     this.getFavorites();
   };
+
+  removeFavorite = (id: string) => {
+    this.#favorites.update((values) =>
+      values.filter((value) => value.id !== id)
+    );
+    localStorage.setItem('favoriteFacts', JSON.stringify(this.favorites()));
+    this.getFavorites();
+  };
 }
