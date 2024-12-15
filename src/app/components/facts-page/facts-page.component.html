@@ -11,6 +11,8 @@
   <p>
     {{ fact.value }}
   </p>
+  <!-- I would prefer to do this part in the service, but doing it like this now, because of time constraints -->
+  @if(favoriteServer.favorites().length<10 ){
   <button mat-flat-button (click)="addToFavorites(fact)">Favorite</button>
-  }
+  } }
 </ng-container>

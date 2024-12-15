@@ -21,7 +21,7 @@ export class FactsPageComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
 
   private factServer = inject(ChuckNorrisService);
-  private favoriteServer = inject(FavoritesService);
+  public favoriteServer = inject(FavoritesService);
 
   interval: NodeJS.Timeout | null = null;
 
