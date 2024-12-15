@@ -3,11 +3,14 @@ import { RouterOutlet } from '@angular/router';
 import { ChuckNorrisService } from '../services/chuck-norris/chuck-norris.service';
 import { Fact } from './components/model/model';
 import { Subscription } from 'rxjs';
+import { FavoritePageComponent } from './components/favorite-page/favorite-page.component';
+import { FavoritesService } from '../services/favorites/favorites.service';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, FavoritePageComponent, MatButtonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
@@ -21,6 +24,8 @@ export class AppComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
 
   private factServer = inject(ChuckNorrisService);
+  private favoriteServer = inject(FavoritesService);
+
   interval: NodeJS.Timeout | null = null;
 
   chuckNorrisSub: Subscription | undefined;
@@ -68,5 +73,9 @@ export class AppComponent implements OnInit {
 
   toggleChuckNorrisFacts = () => {
     this.newFacts.update(() => !this.newFacts());
+  };
+
+  addToFavorites = (fact: Fact) => {
+    this.favoriteServer.addFavorite(fact);
   };
 }

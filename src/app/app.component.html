@@ -1,6 +1,6 @@
 <main class="main">
   <div>
-    <button (click)="toggleChuckNorrisFacts()">
+    <button mat-flat-button (click)="toggleChuckNorrisFacts()">
       {{ this.newFacts() ? "Stop new facts" : "Start new facts" }}
     </button>
     <h2>current fact:</h2>
@@ -12,7 +12,9 @@
     <p>
       {{ fact.value }}
     </p>
+    <button mat-flat-button (click)="addToFavorites(fact)">Favorite</button>
     }
+    <app-favorite-page></app-favorite-page>
   </div>
 </main>
 <router-outlet />
