@@ -1,0 +1,16 @@
+<ng-container>
+  <button mat-flat-button (click)="toggleChuckNorrisFacts()">
+    {{ this.newFacts() ? "Stop new facts" : "Start new facts" }}
+  </button>
+  <h2>current fact:</h2>
+  <p>
+    {{ fact()?.value }}
+  </p>
+  <h2>fact list:</h2>
+  @for (fact of facts(); track $index) {
+  <p>
+    {{ fact.value }}
+  </p>
+  <button mat-flat-button (click)="addToFavorites(fact)">Favorite</button>
+  }
+</ng-container>
