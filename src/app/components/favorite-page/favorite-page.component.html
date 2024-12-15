@@ -1,0 +1,6 @@
+<mat-list>
+  @for (fact of favoriteService.favorites(); track $index) {
+  <mat-list-item>{{ fact.value }}</mat-list-item>
+  <button mat-flat-button>X</button>
+  }
+</mat-list>
