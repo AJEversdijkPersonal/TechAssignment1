@@ -2,17 +2,15 @@
   <button mat-flat-button (click)="toggleChuckNorrisFacts()">
     {{ this.newFacts() ? "Stop new facts" : "Start new facts" }}
   </button>
-  <h2>current fact:</h2>
-  <p>
-    {{ fact()?.value }}
-  </p>
   <h2>fact list:</h2>
-  @for (fact of facts(); track $index) {
-  <p>
-    {{ fact.value }}
-  </p>
-  <!-- I would prefer to do this part in the service, but doing it like this now, because of time constraints -->
-  @if(favoriteServer.favorites().length<10 ){
-  <button mat-flat-button (click)="addToFavorites(fact)">Favorite</button>
-  } }
+  <mat-list>
+    @for (fact of facts(); track $index) {
+    <mat-list-item>
+      {{ fact.value }}
+    </mat-list-item>
+    <!-- I would prefer to do this part in the service, but doing it like this now, because of time constraints -->
+    @if(favoriteServer.favorites().length<10 ){
+    <button mat-flat-button (click)="addToFavorites(fact)">Favorite</button>
+    } }
+  </mat-list>
 </ng-container>

@@ -4,11 +4,12 @@ import { Fact } from '../model/model';
 import { ChuckNorrisService } from '../../../services/chuck-norris/chuck-norris.service';
 import { Subscription } from 'rxjs';
 import { FavoritesService } from '../../../services/favorites/favorites.service';
+import { MatListModule } from '@angular/material/list';
 
 @Component({
   selector: 'app-facts-page',
   standalone: true,
-  imports: [MatButtonModule],
+  imports: [MatListModule, MatButtonModule],
   templateUrl: './facts-page.component.html',
   styleUrl: './facts-page.component.scss',
 })
