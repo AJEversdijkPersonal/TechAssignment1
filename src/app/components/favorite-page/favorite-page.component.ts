@@ -18,6 +18,5 @@ export class FavoritePageComponent implements OnInit {
   ngOnInit(): void {
     this.favoriteService.getFavorites();
     this.favoriteFacts.set(this.favoriteService.favorites());
-    console.log('favorites', this.favoriteFacts());
   }
 }

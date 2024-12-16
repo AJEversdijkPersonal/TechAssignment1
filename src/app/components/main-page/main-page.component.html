@@ -1,0 +1,19 @@
+<ng-container>
+  <div class="menu-parent">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="navigateTo('facts-page')"
+    >
+      {{ "facts-page" }}
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="navigateTo('favorites-page')"
+    >
+      {{ "favorites-page" }}
+    </button>
+  </div>
+  <router-outlet></router-outlet>
+</ng-container>
